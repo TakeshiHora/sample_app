@@ -2,6 +2,11 @@
 @import "bootstrap";
 
 /* universal */
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -103,6 +108,11 @@ footer ul li {
   float: left;
   margin-left: 15px;
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> sign-up
 /* miscellaneous */
 
 .debug_dump {
