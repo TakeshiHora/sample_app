@@ -1,5 +1,9 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token
+  before_save   :downcase_email
+  before_create :create_activation_digest
+  validates :name,  presence: true, length: { maximum: 50 }
+  
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
@@ -73,6 +77,19 @@ class User < ApplicationRecord
   # 現在のユーザーがフォローしてたらtrueを返す
     def following?(other_user)
       self.following.include?(other_user)
+    end
+    
+  private
+
+    # メールアドレスをすべて小文字にする
+    def downcase_email
+      self.email = self.email.downcase
+    end
+
+    # 有効化トークンとダイジェストを作成および代入する
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(self.activation_token)
     end
   
 end
